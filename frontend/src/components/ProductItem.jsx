@@ -12,7 +12,7 @@ const ProductItem = ({ id, image, name, price }) => {
         <img
           src={Array.isArray(image) && image.length > 0 ? image[0] : ''}
           alt={name}
-          className='hover-scale-110 transition ease-in-out'
+          className='hover:scale-110 transition ease-in-out'
         />
       </div>
       <p className='pt-3 pb-1 text-sm'>{name}</p>
