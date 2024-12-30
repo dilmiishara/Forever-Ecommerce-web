@@ -9,7 +9,7 @@ import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
 
-    const {products} = useContext(ShopContext);
+    const {products, search, showSearch} = useContext(ShopContext);
     const [showFilter,setShowFilter] = useState(false);
     const [filterProducts, setFilterProducts] = useState([]);
     const [category, setCategory] = useState([]);
