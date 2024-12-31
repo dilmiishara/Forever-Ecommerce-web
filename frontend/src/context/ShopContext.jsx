@@ -20,36 +20,73 @@ const ShopContextProvider = (props) => {
         let cartData = structuredClone(cartItems);
         const key = `${itemId}_${size}`; // Use a combination of itemId and size as the key
     
-        if (cartData[key]) {
-            cartData[key] += 1;
-        } else {
-            cartData[key] = 1;
+        // if (cartData[key]) {
+        //     cartData[key] += 1;
+        // } else {
+        //     cartData[key] = 1;
+        // }
+
+        if(cartData[itemId]){
+            if(cartData[itemId][size]){
+                cartData[itemId][size] += 1;
+            }
+            else{
+                cartData[itemId][size] = 1;
+            }
+        }else{
+            cartData[itemId]= {};
+            cartData[itemId][size] = 1;
         }
-    
+
         setCartItems(cartData);
     };
     
 
     const getCartCount = () => {
         let totalCount = 0;
-        for (const key in cartItems) {
-            try {
-                if (cartItems[key] > 0) {
-                    totalCount += cartItems[key];
+        for (const items in cartItems) {
+            for (const item in cartItems[items]){
+                try {
+                    if (cartItems[items][item] > 0) {
+                        totalCount += cartItems[items][item];
+                    }
+                } catch (error) {
+                    console.error(error); // It's a good practice to log the error
                 }
-            } catch (error) {
-                console.error(error); // It's a good practice to log the error
             }
         }
         return totalCount;
     };
-    
+
+    const updateQuantity = async (itemId,size,quantity)=>{
+        let cartData = structuredClone(cartItems);
+        cartData[itemId][size] = quantity;
+        setCartItems(cartData);
+    }
+
+    const getCartAmount =()=>{
+        let totalAmount = 0;
+        for(const items in cartItems){
+            let itemInfo = products.find((product)=>product._id === items);
+            for(const item in cartItems[items]){
+                try{
+                    if(cartItems[items][item]>0){
+                        totalAmount += itemInfo.price * cartItems[items][item];
+                    }
+                }catch(error){
+
+                }
+            }
+        }
+        return totalAmount;
+    }
 
     const value = {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
         cartItems,addToCart,
-        getCartCount
+        getCartCount,updateQuantity,
+        getCartAmount
     };
 
     return (
