@@ -14,6 +14,7 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const [products,setProducts] = useState ([]);
     const navigate = useNavigate();
+    const [token,setToken] = useState('');
 
     const addToCart = async (itemId, size) => {
         if (!size) {
@@ -108,7 +109,8 @@ const ShopContextProvider = (props) => {
         search, setSearch, showSearch, setShowSearch,
         cartItems,addToCart,
         getCartCount,updateQuantity,
-        getCartAmount, navigate, backendUrl
+        getCartAmount, navigate, backendUrl,
+        setToken,token
     };
 
     return (
